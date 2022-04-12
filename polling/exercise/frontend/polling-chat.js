@@ -19,9 +19,19 @@ async function postNewMsg(user, text) {
   // write code here
 }
 
+// poll the server
 async function getNewMsgs() {
-  // poll the server
   // write code here
+  let json;
+  try {
+    const res = await fetch('/poll');
+    json = await res.json();
+  } catch(e) {
+    console.error("Polling error", e);
+  }
+  allChat = json.msg;
+  render();
+  setTimeout(getNewMsgs, INTERVAL);
 }
 
 function render() {
